@@ -1,0 +1,42 @@
+## Interface: 11503
+## Title: SmartQuestLog
+## Author: devyne
+## Notes: 
+## Version: 1.0.0
+## Dependencies: Questie
+## OptionalDeps: Ace3, LibStub
+
+
+
+Libs\Ace3\LibStub\LibStub.lua
+Libs\Ace3\CallbackHandler-1.0\CallbackHandler-1.0.xml
+Libs\Ace3\AceAddon-3.0\AceAddon-3.0.xml
+Libs\Ace3\AceEvent-3.0\AceEvent-3.0.xml
+Libs\Ace3\AceDB-3.0\AceDB-3.0.xml
+Libs\Ace3\AceDBOptions-3.0\AceDBOptions-3.0.xml
+Libs\Ace3\AceConsole-3.0\AceConsole-3.0.xml
+Libs\Ace3\AceGUI-3.0\AceGUI-3.0.xml
+Libs\Ace3\AceConfig-3.0\AceConfig-3.0.xml
+
+# Utils
+SQLUtils.lua
+
+# Data
+Data\SQLData.lua
+Data\SQLSubzoneData.lua
+Data\SQLQuestieWrapper.lua
+Data\SQLChainData.lua
+
+# Live model
+Model\SQLAgentModel.lua
+Model\SQLQuestModel.lua
+Model\SQLActionModel.lua
+Model\SQLModel.lua
+
+# Interface
+Interface\SQLInterface.lua
+Interface\SQLController.lua
+
+# Main
+SQLManager.lua
+SmartQuestLog.lua
