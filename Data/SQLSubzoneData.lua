@@ -164,5 +164,7 @@ SQLSubzoneData.Subzones = {
 		["Ranazjar Isle"] = { 25, 35, 4, 17.5 },
 		["Mannoroc Coven"] = { 45, 58.2, 67.5, 88.5 },
 		["Magram Village"] = { 65, 77, 63, 83.5 },
+		["Gelkis Village"] = { 32, 45, 77, 97 },
+		["Valley of Spears"] = { 25, 41.5, 39, 66 },
 	},
 }

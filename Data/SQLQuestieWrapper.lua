@@ -17,10 +17,6 @@ local ZoneDB = QuestieLoader:ImportModule("ZoneDB")
 -- -- -- -- -- -- -- --
 
 
-function SQLData:GetZoneMap()
-	return ZoneDB:GetZonesWithQuests(false)
-end
-
 function SQLData:GetZoneName(id)
     local name = l10n("Unknown Zone")
     for category, data in pairs(l10n.zoneLookup) do

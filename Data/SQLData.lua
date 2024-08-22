@@ -22,13 +22,11 @@ SQLData.AgentType = {
 }
 
 
-SQLData.ZoneMap = nil
 SQLData.AllQuests = nil
 
 function SQLData:Init()
 	debug(1, "Initializing data model...")
 	self.AllQuests = SQLQuestieWrapper:AllQuests()
-	self.ZoneMap = self:GetZoneMap()
 	SQLChainData:Init()
 end
 
