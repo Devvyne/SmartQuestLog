@@ -8,6 +8,7 @@ local G_GetQuestLogTitle = GetQuestLogTitle
 
 
 SQLModel.Actions = nil
+SQLModel.EffFactor = 1
 
 function SQLModel:Init()
 	SQLData:Init()
@@ -15,7 +16,10 @@ function SQLModel:Init()
 end
 
 function SQLModel:RefreshAll()
-	SQLQuestModel:Init()	
+	SQLQuestModel:RefreshXpFactor()
+	self:RefreshEffFactor()
+	
+	SQLQuestModel:Init()
 	self:RefreshActions()
 end
 
@@ -36,6 +40,25 @@ function SQLModel:RefreshActions()
 			end
 		end
 	end
+end
+
+function SQLModel:RefreshEffFactor()
+	local lvlFactor = 1
+	local playerLevel = UnitLevel("player")
+	
+	if playerLevel < 10 then
+		lvlFactor = 3
+	elseif playerLevel < 20 then
+		lvlFactor = 2
+	elseif playerLevel < 30 then
+		lvlFactor = 1.5
+	elseif playerLevel < 40 then
+		lvlFactor = 1.25
+	elseif playerLevel < 50 then
+		lvlFactor = 1.125
+	end
+	
+	self.EffFactor = SQLQuestModel.XpFactor * lvlFactor
 end
 
 function SQLModel:ActionsForQuest(quest)
@@ -92,6 +115,8 @@ function SQLModel:QuestRemoved(questId)
 end
 
 function SQLModel:PlayerLevelUp()
+	SQLQuestModel:RefreshXpFactor()
+	self:RefreshEffFactor()
 	SQLQuestModel:RefreshRecommendations()
 	self:RefreshActions()
 end
@@ -102,7 +127,7 @@ end
 function SQLModel:IsQuestRecommended(quest, ignoreLevels)
 	-- if already complete we'll allow lower efficiency
 	if quest:state() == QuestState.ACTIVE_COMPLETE then
-		return quest:eff(true) > 0.1
+		return quest:eff(true) > 0.03 * self.EffFactor	
 	end
 
 	-- Only green or yellow quests are recommended
@@ -113,16 +138,21 @@ function SQLModel:IsQuestRecommended(quest, ignoreLevels)
 		end
 	end
 	
-	if UnitLevel("player") < 25 then
-		return quest:eff(true) > 0.2
-	else
-		return quest:eff(true) > 0.125
-	end
+	return quest:eff(true) > 0.04 * self.EffFactor	
 end
 
 function SQLModel:QuestEffIndex(quest, calcChain)
 	local eff = quest:eff(calcChain)
 	
+	if eff < 0.03 * self.EffFactor then       -- Avoid (Gray)
+		return 1
+	elseif eff < 0.05 * self.EffFactor then   -- Low (Bronze)
+		return 2
+	elseif eff < 0.1 * self.EffFactor then    -- Medium (Silver)
+		return 3  
+	else return 4 end        				  -- High (Gold)
+	
+	--[[
 	if UnitLevel("player") < 25 then
 		if eff < 0.15 then       -- Avoid (Gray)
 			return 1
@@ -132,25 +162,32 @@ function SQLModel:QuestEffIndex(quest, calcChain)
 			return 3  
 		else return 4 end        -- High (Gold)
 	else
-		if eff < 0.1 then       -- Avoid (Gray)
+		if eff < 0.075 then       -- Avoid (Gray)
 			return 1
-		elseif eff < 0.2 then   -- Low (Bronze)
+		elseif eff < 0.15 then   -- Low (Bronze)
 			return 2
-		elseif eff < 0.3 then    -- Medium (Silver)
+		elseif eff < 0.25 then    -- Medium (Silver)
 			return 3  
 		else return 4 end        -- High (Gold)
 	end
+	--]]
 end
 
-function SQLModel:IsZoneRecommended(eff)
-	if UnitLevel("player") < 25 then
-		return eff > 1.2
-	else
-		return eff > 0.9
-	end
+function SQLModel:IsZoneRecommended(eff)	
+	return eff > 0.3 * self.EffFactor
 end
 
 function SQLModel:ZoneRecommendability(eff)
+	if eff < 0.25 * self.EffFactor then
+		return 1
+	elseif eff < 0.45 * self.EffFactor then
+		return 2
+	elseif eff < 0.7 * self.EffFactor then
+		return 3
+	else return 4 end
+
+
+	--[[
 	if UnitLevel("player") < 25 then
 		if eff < 1.2 then
 			return 1
@@ -160,12 +197,13 @@ function SQLModel:ZoneRecommendability(eff)
 			return 3
 		else return 4 end
 	else
-		if eff < 0.8 then
+		if eff < 0.7 then
 			return 1
-		elseif eff < 1.35 then
+		elseif eff < 1.25 then
 			return 2
-		elseif eff < 2 then
+		elseif eff < 1.8 then
 			return 3
 		else return 4 end
 	end
+	--]]
 end

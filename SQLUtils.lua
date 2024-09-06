@@ -106,5 +106,14 @@ function SQLUtils.playerDistanceToPoint(pointX, pointY)
 	if not playerX or not playerY then return nil end
 	return math.sqrt((pointX - playerX)^2 + (pointY - playerY)^2)
 end
+
+
+function SQLUtils.isClassic()
+	return WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
+end
+
+function SQLUtils.isSoD()
+	return SQLUtils.isClassic() and C_Seasons.HasActiveSeason() and C_Seasons.GetActiveSeason() == Enum.SeasonID.SeasonOfDiscovery
+end
 	
 	

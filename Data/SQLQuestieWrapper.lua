@@ -50,8 +50,18 @@ end
 -- -- --  Quests  -- -- --
 -- -- -- -- -- -- -- -- --
 
-function SQLData:QuestXp(questId)    
-    return QuestXP:GetQuestLogRewardXP(questId, true) -- this func already calculates Discoverer’s Delight
+function SQLData:QuestRawXp(questId)  
+	if QuestXP.db[questId] then        
+        local xp = QuestXP.db[questId][2]
+    
+        if xp and xp > 0 then
+            return xp
+        end
+    end
+    
+    return 0
+	
+    -- return QuestXP:GetQuestLogRewardXP(questId, true) -- this func already calculates Discoverer’s Delight
 end
 
 function SQLData:QuestLevel(questId)

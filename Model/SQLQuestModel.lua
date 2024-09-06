@@ -10,10 +10,23 @@ local G_IsQuestDone, G_IsQuestComplete, G_GetQuestObjectives, G_GetQuestLogTitle
 
 SQLQuestModel.ActiveQuests = nil
 SQLQuestModel.RecommendedQuests = nil
+SQLQuestModel.XpFactor = 1
 
-function SQLQuestModel:Init()
+function SQLQuestModel:Init()	
 	self:BuildActiveQuestsMap() -- must be done before calc recommendations
 	self:RefreshRecommendations()
+end
+
+function SQLQuestModel:RefreshXpFactor()
+	local xpFactor = 1
+	if SQLUtils.isSoD() then
+		if UnitLevel("player") < 50 then
+			xpFactor = 2.5
+		else
+			xpFactor = 1.5
+		end
+	end
+	self.XpFactor = xpFactor
 end
 
 function SQLQuestModel:RefreshRecommendations()  -- active quests map must be updated before calling this
@@ -140,10 +153,6 @@ function SQLQuestModel.Quest(questId)
 	}
 end
 
-function SQLQuestModel._Quest_Xp(quest)
-	return SQLData:QuestXp(quest.id)
-end
-
 function SQLQuestModel._Quest_ChainXp(quest)
 	return SQLData:ChainXp(quest.id)
 end
@@ -193,8 +202,8 @@ function SQLQuestModel._Quest_EffIndex(quest, calcChain)
 	return SQLModel:QuestEffIndex(quest, calcChain)
 end
 
-function SQLQuestModel._Quest_DiffIndex(quest)  
-    local levelDiff = quest.level - UnitLevel("player")
+function SQLQuestModel._Quest_DiffIndex(quest)
+	local levelDiff = quest.level - UnitLevel("player")
 
     if (levelDiff >= 5) then
         return 4  -- Red
@@ -207,4 +216,42 @@ function SQLQuestModel._Quest_DiffIndex(quest)
     else
         return 0 -- Gray
     end
+end
+
+function SQLQuestModel._Quest_Xp(quest)
+	return SQLQuestModel:QuestXp(quest.id)
+end
+
+local function roundByResolution(num, res)
+	return res * floor((num + floor(res / 2)) / res)
+end
+
+function SQLQuestModel:QuestXp(questId)
+	local xp = SQLData:QuestRawXp(questId)
+	local playerLevel = UnitLevel("player")
+	local levelDiff = SQLData:QuestLevel(questId) - playerLevel
+	
+	-- Gray quests xp reduction (we reduce 20% for each level beyond 5 levels below char level, until a minimum of 10%)
+	if levelDiff < -5 then
+		local levelsBelowThreshold = (levelDiff + 5)*(-1)
+		local reduceFactor = 1 - (levelsBelowThreshold * 0.2)
+		if reduceFactor < 0.1 then reduceFactor = 0.1 end
+		xp = xp * reduceFactor
+	end
+	
+	-- We then round down/up to nearest interval (intervals are 5/10/25/50 depending on xp magnitude)
+	if (xp <= 100) then
+        xp = roundByResolution(xp, 5)
+    elseif (xp <= 500) then
+		xp = roundByResolution(xp, 10)
+    elseif (xp <= 1000) then
+        xp = roundByResolution(xp, 25)
+    else
+        xp = roundByResolution(xp, 50)
+    end
+	
+	-- SoD Discoverer's Delight
+	xp = xp * self.XpFactor
+	
+	return xp
 end

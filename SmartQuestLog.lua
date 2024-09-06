@@ -14,13 +14,13 @@ local function StartAfterQuestie()
 		SQLManager:Init()
 		SmartQuestLog:RegisterChatCommand("sql", "SlashCommand")	
 		SmartQuestLog:RegisterChatCommand("rui", "ReloadUI")	
-		SmartQuestLog:RegisterChatCommand("fonts", "Fonts")	
+		SmartQuestLog:RegisterChatCommand("sqlzone", "ForceZone")	
 		debug(0, "Done! Ready to go...")
 	end
 end
 
 function SmartQuestLog:OnInitialize()		
-	if WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC then
+	if not SQLUtils.isClassic() then
 		debug(0, "SmartQuestLog is intended for WoW Classic and may not work properly on this version")		
 	end
 	
@@ -59,59 +59,6 @@ function SmartQuestLog:ReloadUI(msg)
 	ReloadUI()
 end
 
-
-
-
-
-
-local AceGUI = LibStub("AceGUI-3.0")
-
-local fonts = {
-	{"GameFontNormal", GameFontNormal},
-	{"GameFontNormalSmall", GameFontNormalSmall},
-	-- GameFontNormalLarge = GameFontNormalLarge,
-	{"GameFontHighlight", GameFontHighlight},
-	{"GameFontHighlightSmall", GameFontHighlightSmall},
-	{"GameFontHighlightSmallOutline", GameFontHighlightSmallOutline},
-	-- GameFontHighlightLarge,
-	{"GameFontDisable", GameFontDisable},
-	{"GameFontDisableSmall", GameFontDisableSmall},
-	{"GameFontDisableLarge", GameFontDisableLarge},
-	{"QuestFontNormalSmall", QuestFontNormalSmall},
-	{"DialogButtonHighlightText",  DialogButtonHighlightText},
-	{"ErrorFont", ErrorFont},
-	{"TextStatusBarText", TextStatusBarText},
-	{"CombatLogFont", CombatLogFont},
-	{"GameTooltipText", GameTooltipText},
-	{"GameTooltipTextSmall", GameTooltipTextSmall},
-}
-
-local FontFrame = nil
-function SmartQuestLog:Fonts(msg)
-	if fontFrame then return end
-	
-	local fontFrame = AceGUI:Create("Window")
-	fontFrame:SetCallback("OnClose", function()
-		FontFrame = nil	
-	end)
-
-	fontFrame:SetLayout("List")
-	fontFrame:SetWidth(200)
-	fontFrame:SetHeight(400)
-	fontFrame:EnableResize(false)
-	-- fontFrame:SetPoint("LEFT", 0, 110)
-	-- fontFrame:SetPoint("CENTER", 0, -180)
-	-- fontFrame.frame:SetFrameStrata("LOW")
-	
-	for i=9, 14, 0.5 do
-		local label = AceGUI:Create("Label")    
-		label:SetFullWidth(true)
-		label.label:SetMaxLines(1)
-		label.label:SetFont("Fonts\\FRIZQT__.TTF", i)
-		-- local name = f.GetName()
-		label:SetText("Grove of the ancients " .. tostring(i))
-		fontFrame:AddChild(label)
-	end
-	
-	fontFrame:Show()
+function SmartQuestLog:ForceZone(msg)
+	SQLController:SwitchToZone(tonumber(msg))
 end

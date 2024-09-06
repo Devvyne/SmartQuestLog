@@ -58,7 +58,7 @@ function SQLData:ChainXp(questId)
     local chainXp = 0
 	
 	for _, q in pairs(chain) do
-		chainXp = chainXp + SQLData:QuestXp(q)
+		chainXp = chainXp + SQLQuestModel:QuestXp(q)
 	end
 	
     return chainXp
