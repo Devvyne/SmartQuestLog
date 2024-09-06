@@ -15,6 +15,7 @@ local function StartAfterQuestie()
 		SmartQuestLog:RegisterChatCommand("sql", "SlashCommand")	
 		SmartQuestLog:RegisterChatCommand("rui", "ReloadUI")	
 		SmartQuestLog:RegisterChatCommand("sqlzone", "ForceZone")	
+		SmartQuestLog:RegisterChatCommand("sqlstats", "PrintStats")	
 		debug(0, "Done! Ready to go...")
 	end
 end
@@ -61,4 +62,8 @@ end
 
 function SmartQuestLog:ForceZone(msg)
 	SQLController:SwitchToZone(tonumber(msg))
+end
+
+function SmartQuestLog:PrintStats(msg)
+	SQLModel:PrintThresholds()
 end

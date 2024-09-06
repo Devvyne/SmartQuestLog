@@ -9,7 +9,23 @@ local G_GetQuestLogTitle = GetQuestLogTitle
 
 SQLModel.Actions = nil
 SQLModel.EffFactor = 1
+local LENIENT_FACTOR = 0.8  -- TODO: make this configurable by user
 
+local QRank = {	-- (lower thresholds)
+	BRONZE = 0.025,
+	SILVER = 0.066,
+	GOLD = 0.1,
+	RECOMMEND = 0.05,
+}
+
+local ZRank = {	    -- (lower thresholds)
+	BRONZE = 0.25,
+	SILVER = 0.5,
+	GOLD = 0.75,
+	RECOMMEND = 0.3,
+}
+
+  
 function SQLModel:Init()
 	SQLData:Init()
 	SQLModel:RefreshAll()
@@ -42,23 +58,26 @@ function SQLModel:RefreshActions()
 	end
 end
 
-function SQLModel:RefreshEffFactor()
-	local lvlFactor = 1
+local function levelFactor()
 	local playerLevel = UnitLevel("player")
 	
 	if playerLevel < 10 then
-		lvlFactor = 3
+		return 3
 	elseif playerLevel < 20 then
-		lvlFactor = 2
+		return 2
 	elseif playerLevel < 30 then
-		lvlFactor = 1.5
+		return 1.5
 	elseif playerLevel < 40 then
-		lvlFactor = 1.25
+		return 1.25
 	elseif playerLevel < 50 then
-		lvlFactor = 1.125
+		return 1.125
+	else
+		return 1
 	end
-	
-	self.EffFactor = SQLQuestModel.XpFactor * lvlFactor
+end
+
+function SQLModel:RefreshEffFactor()
+	self.EffFactor = LENIENT_FACTOR * SQLQuestModel.XpFactor * levelFactor()
 end
 
 function SQLModel:ActionsForQuest(quest)
@@ -125,9 +144,9 @@ end
 -- Recommendation bars
 
 function SQLModel:IsQuestRecommended(quest, ignoreLevels)
-	-- if already complete we'll allow lower efficiency
+	-- if already complete we'll allow all low-eff quests
 	if quest:state() == QuestState.ACTIVE_COMPLETE then
-		return quest:eff(true) > 0.03 * self.EffFactor	
+		return quest:effIndex(true) > 1
 	end
 
 	-- Only green or yellow quests are recommended
@@ -138,17 +157,17 @@ function SQLModel:IsQuestRecommended(quest, ignoreLevels)
 		end
 	end
 	
-	return quest:eff(true) > 0.04 * self.EffFactor	
+	return quest:eff(true) > QRank.RECOMMEND * self.EffFactor	
 end
 
 function SQLModel:QuestEffIndex(quest, calcChain)
 	local eff = quest:eff(calcChain)
 	
-	if eff < 0.03 * self.EffFactor then       -- Avoid (Gray)
+	if eff < QRank.BRONZE * self.EffFactor then       -- Avoid (Gray)
 		return 1
-	elseif eff < 0.05 * self.EffFactor then   -- Low (Bronze)
+	elseif eff < QRank.SILVER * self.EffFactor then   -- Low (Bronze)
 		return 2
-	elseif eff < 0.1 * self.EffFactor then    -- Medium (Silver)
+	elseif eff < QRank.GOLD * self.EffFactor then    -- Medium (Silver)
 		return 3  
 	else return 4 end        				  -- High (Gold)
 	
@@ -174,15 +193,15 @@ function SQLModel:QuestEffIndex(quest, calcChain)
 end
 
 function SQLModel:IsZoneRecommended(eff)	
-	return eff > 0.3 * self.EffFactor
+	return eff > ZRank.RECOMMEND * self.EffFactor
 end
 
 function SQLModel:ZoneRecommendability(eff)
-	if eff < 0.25 * self.EffFactor then
+	if eff < ZRank.BRONZE * self.EffFactor then
 		return 1
-	elseif eff < 0.45 * self.EffFactor then
+	elseif eff < ZRank.SILVER * self.EffFactor then
 		return 2
-	elseif eff < 0.7 * self.EffFactor then
+	elseif eff < ZRank.GOLD * self.EffFactor then
 		return 3
 	else return 4 end
 
@@ -206,4 +225,25 @@ function SQLModel:ZoneRecommendability(eff)
 		else return 4 end
 	end
 	--]]
+end
+
+function SQLModel:PrintThresholds()
+	print(string.format("Eff Factor: %.2f (XP %.1f, LVL %.3f, LEN %.2f)",
+		self.EffFactor,
+		SQLQuestModel.XpFactor,
+		levelFactor(),
+		LENIENT_FACTOR
+	))	
+	print(string.format("QRanks: Bronze %.2f, Silver %.2f, Gold %.2f (Recommend %.2f)",
+		QRank.BRONZE * self.EffFactor,
+		QRank.SILVER * self.EffFactor,
+		QRank.GOLD * self.EffFactor,
+		QRank.RECOMMEND * self.EffFactor
+	))
+	print(string.format("ZRanks: Bronze %.1f, Silver %.1f, Gold %.1f (Recommend %.1f)",
+		ZRank.BRONZE * self.EffFactor,
+		ZRank.SILVER * self.EffFactor,
+		ZRank.GOLD * self.EffFactor,
+		ZRank.RECOMMEND * self.EffFactor
+	))
 end
