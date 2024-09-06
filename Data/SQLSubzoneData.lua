@@ -30,7 +30,8 @@ SQLSubzoneData.Subzones = {
 		["Goldshire"] = { 37, 45, 60, 70 },
 		["Forest's Edge"] = { 22, 30, 68, 96 },
 		["Fargodeep Mine"] = { 30, 46, 76, 90 },
-		["Northshire Valley"] = { 43.5, 60, 29, 55 },
+		["Northshire Valley"] = { 43.5, 58.5, 25, 55 },
+		["Jasperlode Mine"] = { 58.5, 67, 46, 57 },
 		["Crystal Lake"] = { 45.5, 60, 57, 71 },
 		["Stonecairn Lake"] = { 67, 83, 38, 60 },
 		["Tower of Azora"] = { 61, 74, 60, 73 },
@@ -56,7 +57,7 @@ SQLSubzoneData.Subzones = {
 		["Sentinel Hill"] = { 51, 60, 42, 58 },
 		["The Dead Acre"] = { 57, 68, 55, 67 },
 		["The Dust Plains"] = { 56, 71, 67, 78 },
-		["Dagger Hills"] = { 37, 56, 75.5, 84.5 },
+		["Dagger Hills"] = { 37, 56, 75.5, 91 },
 		["Westfall Lighthouse"] = { 26, 37, 79, 93 },
 		["Demont's Place"] = { 26, 37, 63, 78 },
 		["Moonbrook"] = { 39, 50, 55.5, 75.5 },
@@ -68,6 +69,75 @@ SQLSubzoneData.Subzones = {
 		["The Molsen Farm"] = { 39, 50.5, 30, 43 },
 		["Saldean's Farm"] = { 50.5, 60, 27.5, 40 },
 	},
+	[44] = { -- Redridge Mountains (TODO Complete)
+		["Lakeshire"] = { 16.5, 34, 38, 60.5 },
+		["Three Corners"] = { 9, 27, 60.5, 88},
+		["Lakeridge Highway"] = { 27, 54, 66, 85},
+		["Lake Everstill"] = { 34, 59.5, 48.5, 66},
+		
+	},
+	[33] = { -- Stranglethorn Vale (TODO missing 2-3 small areas)
+		["Zul'Gurub"] = { 53.3, 78, 0, 40 },
+		["Rebel Camp"] = { 33, 41.5, 0, 9 },
+		["Kurzen's Compound"] = { 41.5, 50, 0, 15 },
+		["Nesingwary's Expedition"] = { 30.5, 37.5, 9, 17 },
+		["Grom'Gol Basecamp"] = { 29, 35, 24, 31 },
+		["The Vile Reef"] = { 18, 29, 21, 35 },
+		
+		["Ruins of Zul'Kunda"] = { 22.5, 30, 7, 17 },
+		["Zuuldaia Ruins"] = { 19, 22.5, 12, 21 },
+		["Mizjah Ruins"] = { 35, 39, 27, 32 },
+		["Bal'lal Ruins"] = { 27, 32, 17, 21 },
+		["Kal'ai Ruins"] = { 32, 37, 18, 24 },
+		["Balia'mah Ruins"] = { 39, 45, 27, 35 },
+		["Mosh'Ogg Ogre Mound"] = { 45, 53.3, 24, 36 },
+		["Lake Nazferiti"] = { 37.5, 46.5, 15, 24 },
+		
+		["Ziata'jai Ruins"] = { 38, 43, 35, 47 },
+		["Ruins of Zul'Mamwe"] = { 43, 50, 37.5, 47 },
+		["Gurubashi Arena"] = { 25, 33.5, 38, 50 },
+		["Bloodsail Compound"] = { 21.5, 32, 50, 57.5 },
+		["Ruins of Jubuwal"] = { 33.5, 38, 48.5, 55 },
+		["Mistvale Valley"] = { 32, 37, 56, 69 },
+		["Ruins of Aboraz"] = { 37, 42, 55, 63 },
+		["Nek'mani Wellspring"] = { 23, 29, 57.5, 67.5 },
+		["Booty Bay"] = { 22, 30.5, 69, 79 },
+		["Wild Shore"] = { 26, 34, 79, 92 },
+	},	
+	[4] = { -- Blasted Lands
+		["Dreadmaul Hold"] = { 37, 48, 8, 18 },
+		["Garrison Armory"] = { 52, 60, 8, 18 },
+		["Nethergarde Keep"] = { 60, 70, 8, 27 },
+		["Rise of the Defiler"] = { 43, 53, 22, 37 },
+		["Altar of Storms"] = { 34, 43, 27, 38 },
+		["Serpent's Coil"] = { 57, 70, 27, 38 },
+		["Dreadmaul Post"] = { 46, 56, 38, 48.5 },
+		["The Dark Portal"] = { 51, 65, 48.5, 65 },
+		["The Tainted Scar"] = { 26, 46, 44, 81 },
+	},	
+	
+	[1] = { -- Dun Morough
+		["Coldridge Valley"] = { 18, 32, 64, 85 },
+		["Coldridge Pass"] = { 18, 38, 63, 74 },
+		["The Grizzled Den"] = { 39, 44.2, 53, 66 },
+		["Chillbreeze Valley"] = { 32, 39, 48, 56 },
+		["Shimmer Ridge"] = { 38, 44.2, 33, 48 },
+		["Iceflow Lake"] = { 31, 38, 29, 48 },
+		["Brewnall Village"] = { 28, 31, 41, 50 },
+		["Gnomeregan"] = { 20, 28, 32, 45 },
+		["Frostmane Hold"] = { 20, 30.5, 48, 56 },
+		
+		
+		["Kharanos"] = { 44.2, 54, 43, 54 },
+		["Gates of Ironforge"] = { 44.2, 54, 30.5, 43 },
+		["Misty Pine Refuge"] = { 54, 60.5, 36.5, 50 },
+		["Amberstill Ranch"] = { 60.5, 65, 47, 54 },
+		["Gol'Bolar Quarry"] = { 65, 73.5, 51, 65 },
+		
+		["North Gate Outpost"] = { 78, 88, 26, 45.7 },
+		["South Gate Outpost"] = { 82.3, 91, 45.7, 56.2 },
+	},
+	
 	
 	
 	[11] = { -- Wetlands
@@ -87,10 +157,66 @@ SQLSubzoneData.Subzones = {
 		["Angerfang Encampment"] = { 41, 55, 40, 56 },
 	},
 	
+	[45] = { -- Arathi Highlands
+		["Circle of West Binding"] = { 20, 28, 24, 36 },
+		["Northfold Manor"] = { 28, 36, 22, 34 },
+		["Boulder'gor"] = { 31, 40.5, 34, 51 },
+		["Stromgarde Keep"] = { 14, 31, 49, 73 },
+		["Circle of Inner Binding"] = { 31, 43, 53, 69 },
+		["Faldir's Cove"] = { 21, 40.5, 71, 93 },
+		["Thandol Span"] = { 40.5, 51.5, 69, 96 },
+		["Boulderfist Hall"] = { 51.5, 60, 64, 85 },
+		["Witherbark Village"] = { 60, 74, 51, 74 },
+		["Hammerfall"] = { 69, 88, 26, 46 },
+		["Circle of East Binding"] = { 59.5, 69, 23, 34 },
+		["Dabyrie's Farmstead"] = { 50, 60, 34, 44 },
+		["Circle of Outer Binding"] = { 50, 57, 44, 57 },
+		["Refuge Point"] = { 40.5, 50, 39, 55 },
+		
+	},
+	[267] = { -- Hillsbrad Foothills
+		["Southshore"] = { 46, 55, 45, 65 },
+		["Western Strand"] = { 24, 46, 63, 74 },
+		["Purgation Isle"] = { 10, 24, 70, 88 },
+		["Azurelode Mine"] = { 21, 32, 53, 63 },
+		["Southpoint Tower"] = { 17, 25, 44, 53 },
+		["Hillsbrad Fields"] = { 25, 43.5, 31, 53 },
+		["Darrow Hill"] = { 43.5, 58, 29, 40 },
+		["Tarren Mill"] = { 58, 67.5, 12, 36.5 },
+		["Durnholde Keep"] = { 67.5, 85, 19, 53 },
+		["Nethander Stead"] = { 55, 67.5, 45, 67 },
+		["Eastern Strand"] = { 55, 67.5, 67, 88 },
+		["Dun Garok"] = { 67.5, 81, 60, 94 },
+		
+	},
+	[36] = { -- Alterac Mountains
+		["Dalaran"] = { 6, 25, 52, 78 },
+		["Lordamere Camp"] = { 15, 25, 79, 92 },
+		["Gavin's Naze"] = { 26, 34.5, 75.5, 93 },
+		["The Headland"] = { 34.5, 43.5, 75.5, 98 },
+		["Corrahn's Dagger"] = { 43.5, 53, 74.5, 95 },
+		["Sofera's Naze"] = { 54, 70, 52, 76 },
+		["Chillwind Point"] = { 70, 96, 50, 84 },
+		
+		["Growless Cave"] = { 32, 45, 63, 74.5 },
+		["Ruins of Alterac"] = { 33.5, 43, 37, 63 },
+		["Crushridge Hold"] = { 43, 53, 32, 52 },
+		["Gallow's Corner"] = { 43, 54, 52, 64 },
+		
+		["Strahnbrad"] = { 55, 70, 37, 52 },
+		["The Uplands"] = { 53, 69, 15, 37 },
+		["Dandred's Fold"] = { 36, 50, 10, 24 },
+		["Misty Shore"] = { 26, 33.5, 28.5, 47 },
+		
+		
+	},
+	
+	
+	
 	-- KALIMDOR
 	
 	[141] = { -- Teldrassil
-		["Shadowglen"] = { 53, 67, 27, 50 },
+		["Shadowglen"] = { 53, 67, 24, 50 },
 		["Starbreeze Village"] = { 61, 71, 51, 63 },
 		["Dolanaar"] = { 51, 61, 50, 63 },
 		["Lake Al'Ameth"] = { 50, 65, 50, 79 },
@@ -144,16 +270,21 @@ SQLSubzoneData.Subzones = {
 		["Malaka'jin"] = { 69, 76.2, 90.7, 100 },
 		["Camp Aparaje"] = { 76.2, 81, 89.5, 95 },
 	},
-	[15] = { -- Dustwallow Marsh (TODO Complete)
+	[15] = { -- Dustwallow Marsh
 		["Theramore"] = { 62, 75, 42, 61 },
 		["Sentry Point"] = { 57, 62, 36.5, 45.5 },
 		["North Point Tower"] = { 44.5, 50, 21, 30 },
 		["Witch Hill"] = { 50, 63.5, 18, 36.5 },
 		["Bluefen"] = { 38, 44.5, 15, 36.5 },
 		["Darkmist Cavern"] = { 28, 38, 15, 25 },
-		["Brackenwall Village"] = { 28, 38, 25, 39 },
+		["Brackenwall Village"] = { 28, 38, 25, 37 },
+		["The Quagmire"] = { 32, 57, 37, 61 },
+		["Den of Flame"] = { 27, 40, 60, 77 },
+		["Stonemaul Ruins"] = { 40, 48, 62, 71 },
+		["Wyrmbog"] = { 48, 62, 65, 89 },
+		["Alcaz Island"] = { 68, 84, 5, 28 },
 	},
-	[405] = { -- Desolace (TODO Complete)
+	[405] = { -- Desolace
 		["Nijel's Point"] = { 60, 70, 5, 14 },
 		["Sargeron"] = { 69.5, 83, 14, 31 },
 		["Thunder Axe Fortress"] = { 49, 60, 22.5, 34 },
@@ -165,6 +296,25 @@ SQLSubzoneData.Subzones = {
 		["Mannoroc Coven"] = { 45, 58.2, 67.5, 88.5 },
 		["Magram Village"] = { 65, 77, 63, 83.5 },
 		["Gelkis Village"] = { 32, 45, 77, 97 },
-		["Valley of Spears"] = { 25, 41.5, 39, 66 },
+		["Valley of Spears"] = { 25, 41.5, 39, 65 },
+		["Shadowprey Village"] = { 19, 30, 65, 78 },
+	},
+	[357] = { -- Feralas
+		["The Lower Wilds"] = { 79.5, 92, 36, 51 },
+		["Camp Mojache"] = { 71, 79.5, 36, 47 },
+		["Gordunni Outpost"] = { 72, 82.5, 23, 36 },
+		["Grimtotem Compound"] = { 64, 71, 32, 48 },
+		["The Writhing Deep"] = { 66, 81.5, 51, 71 },
+		["Dire Maul"] = { 52, 64, 35, 52 },
+		["Ruins of Isildien"] = { 57.5, 66, 52, 78 },
+		["Frayfeather Highlands"] = { 50, 57.5, 61.5, 80 },
+		["Feral Scar Vale"] = { 50, 57.5, 52, 61.5 },
+		["Forgotten Coast"] = { 34, 50, 33, 83 },
+		["The Twin Colossals"] = { 36, 56, 15, 33 },
+		["Ruins of Ravenwind"] = { 36, 45, 6, 15 },
+		["Jademir Lake"] = { 45, 57, 2, 15 },
+		["Sardor Isle"] = { 24, 34, 38, 58 },
+		["Isle of Dread"] = { 22, 37, 60, 97 },
+		
 	},
 }
